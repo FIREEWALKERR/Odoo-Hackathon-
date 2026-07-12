@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Global scrollbar styling for compact High Density layouts */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* High Density Compact Form Control Overrides */
+input, select, textarea {
+  font-size: 0.75rem !important; /* text-xs equivalent for high density input values */
+}
+
+/* Base styling adjustments for tables to be super dense */
+th {
+  font-size: 0.65rem !important; /* extra tight headers */
+  letter-spacing: 0.05em !important;
+  font-weight: 700 !important;
+}
+
+td {
+  font-size: 0.75rem !important; /* text-xs td cell text */
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
