@@ -43,10 +43,7 @@ npm install
 npm run dev
 \`\`\`
 
-## Git Workflow
-- Push at least once every hour
-- Commit style: type: short description (e.g. feat:, fix:, docs:)
-- Never push broken code to `main`
+
 
 ## Core Business Rules
 - Vehicle registration number is unique
