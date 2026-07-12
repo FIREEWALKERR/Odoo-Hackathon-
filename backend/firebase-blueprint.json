@@ -1,0 +1,194 @@
+{
+  "entities": {
+    "user": {
+      "title": "User Profile",
+      "description": "User profile details and application access roles",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user ID matching Auth UID" },
+        "email": { "type": "string", "description": "User's email address" },
+        "name": { "type": "string", "description": "Display name of the user" },
+        "role": { "type": "string", "enum": ["Fleet Manager", "Driver", "Safety Officer", "Financial Analyst"] },
+        "phone": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Inactive", "Suspended"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "name", "role", "status", "createdAt"]
+    },
+    "vehicle": {
+      "title": "Vehicle",
+      "description": "Commercial fleet vehicle details",
+      "type": "object",
+      "properties": {
+        "registrationNumber": { "type": "string" },
+        "name": { "type": "string" },
+        "model": { "type": "string" },
+        "type": { "type": "string", "enum": ["Truck", "Container", "Trailer", "Tanker", "Van"] },
+        "maxLoadCapacity": { "type": "number" },
+        "odometer": { "type": "number" },
+        "acquisitionCost": { "type": "number" },
+        "status": { "type": "string", "enum": ["Available", "On-Trip", "In-Shop", "Retired"] },
+        "lastServiceDate": { "type": "string" },
+        "insuranceExpiry": { "type": "string" }
+      },
+      "required": ["registrationNumber", "name", "model", "type", "maxLoadCapacity", "odometer", "acquisitionCost", "status"]
+    },
+    "driver": {
+      "title": "Driver",
+      "description": "Driver profile and safety compliance records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "licenseNumber": { "type": "string" },
+        "licenseCategory": { "type": "string", "enum": ["LMV", "HMV", "TRANS"] },
+        "licenseExpiry": { "type": "string" },
+        "phone": { "type": "string" },
+        "safetyScore": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Suspended", "Inactive"] },
+        "emergencyContact": { "type": "string" }
+      },
+      "required": ["id", "name", "licenseNumber", "licenseCategory", "licenseExpiry", "phone", "safetyScore", "status", "emergencyContact"]
+    },
+    "trip": {
+      "title": "Trip",
+      "description": "Logistics dispatch transit trip log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vehicleId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "cargoWeight": { "type": "number" },
+        "cargoType": { "type": "string" },
+        "origin": { "type": "string" },
+        "destination": { "type": "string" },
+        "distance": { "type": "number" },
+        "status": { "type": "string", "enum": ["Draft", "Dispatched", "Completed", "Cancelled"] },
+        "dispatchTime": { "type": "string" },
+        "completionTime": { "type": "string" },
+        "startOdometer": { "type": "number" },
+        "endOdometer": { "type": "number" },
+        "fuelEstimated": { "type": "number" },
+        "fuelConsumed": { "type": "number" },
+        "costFuel": { "type": "number" },
+        "costTolls": { "type": "number" },
+        "costOther": { "type": "number" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "vehicleId", "driverId", "cargoWeight", "cargoType", "origin", "destination", "distance", "status", "startOdometer", "fuelEstimated"]
+    },
+    "maintenanceLog": {
+      "title": "Maintenance Log",
+      "description": "Vehicle periodic maintenance service entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vehicleId": { "type": "string" },
+        "type": { "type": "string", "enum": ["Oil Change", "Repair", "Inspection", "Brake Service", "Tyre Replacement"] },
+        "cost": { "type": "number" },
+        "date": { "type": "string" },
+        "status": { "type": "string", "enum": ["Scheduled", "In-Progress", "Completed"] },
+        "notes": { "type": "string" },
+        "performedBy": { "type": "string" }
+      },
+      "required": ["id", "vehicleId", "type", "cost", "date", "status", "notes", "performedBy"]
+    },
+    "fuelLog": {
+      "title": "Fuel Log",
+      "description": "Refueling cost log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vehicleId": { "type": "string" },
+        "tripId": { "type": "string" },
+        "date": { "type": "string" },
+        "liters": { "type": "number" },
+        "costPerLiter": { "type": "number" },
+        "totalCost": { "type": "number" },
+        "odometer": { "type": "number" },
+        "location": { "type": "string" }
+      },
+      "required": ["id", "vehicleId", "date", "liters", "costPerLiter", "totalCost", "odometer", "location"]
+    },
+    "expense": {
+      "title": "Expense Log",
+      "description": "Financial operations toll or operational expense log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vehicleId": { "type": "string" },
+        "tripId": { "type": "string" },
+        "type": { "type": "string", "enum": ["Toll", "Driver Allowance", "Permit", "Maintenance", "Fuel", "Other"] },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "type", "amount", "date", "description"]
+    },
+    "notification": {
+      "title": "System Notification",
+      "description": "Live fleet warnings or status alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "warning", "success", "danger"] },
+        "timestamp": { "type": "string" },
+        "read": { "type": "boolean" },
+        "userId": { "type": "string" }
+      },
+      "required": ["id", "title", "message", "type", "timestamp", "read"]
+    },
+    "setting": {
+      "title": "General Settings",
+      "description": "Global enterprise configuration settings",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string" },
+        "currency": { "type": "string" },
+        "timezone": { "type": "string" },
+        "fuelCostPerLiter": { "type": "number" }
+      },
+      "required": ["companyName", "currency", "timezone", "fuelCostPerLiter"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/user" },
+      "description": "User profile collection"
+    },
+    "vehicles/{registrationNumber}": {
+      "schema": { "$ref": "#/entities/vehicle" },
+      "description": "Fleet vehicles collection"
+    },
+    "drivers/{driverId}": {
+      "schema": { "$ref": "#/entities/driver" },
+      "description": "Fleet drivers collection"
+    },
+    "trips/{tripId}": {
+      "schema": { "$ref": "#/entities/trip" },
+      "description": "Transit dispatches collection"
+    },
+    "maintenanceLogs/{logId}": {
+      "schema": { "$ref": "#/entities/maintenanceLog" },
+      "description": "Vehicle maintenance records"
+    },
+    "fuelLogs/{logId}": {
+      "schema": { "$ref": "#/entities/fuelLog" },
+      "description": "Fuel purchase logs"
+    },
+    "expenses/{expenseId}": {
+      "schema": { "$ref": "#/entities/expense" },
+      "description": "Fleet operational expenses logs"
+    },
+    "notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/notification" },
+      "description": "System and user notifications"
+    },
+    "settings/{settingId}": {
+      "schema": { "$ref": "#/entities/setting" },
+      "description": "Global application configuration settings"
+    }
+  }
+}
