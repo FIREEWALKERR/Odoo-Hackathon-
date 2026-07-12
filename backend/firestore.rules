@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Dev/Preview configuration to allow read/write access for seeder and app components
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
